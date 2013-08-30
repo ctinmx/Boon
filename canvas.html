@@ -1,0 +1,357 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	<meta http-equiv="Access-Control-Allow-Origin" content="*"> 
+	<meta name="author" content="Equipo Boon"/>
+	<meta name="description" content="Plasma tus ideas" />
+	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+	<link rel="stylesheet" href="css/estilocanvas.css" type="text/css"/>
+	<link rel="stylesheet" href="css/jquery.mobile-1.3.1.min.css" type="text/css"/>
+	<script type="text/javascript" src="js/jquery.js"></script>
+</head>
+<body>                           
+	<div data-role="page" id="page1">
+		<div data-role="header" id = "h" data-theme="f">
+			<img class = "ui-btn-left herra" src="images/herramientas.png"></img>
+			<img class = "logoPrincipal" src = "images/logo_sup.png"></img>
+			<img class = "ui-btn-right desplegable" src="images/menu.png"></img>
+			<img style = "right: 40px;" class = "ui-btn-right ocultar" src="images/up.png"></img>
+			<ul class="subnavegador">
+				<li>
+					<a class="text" href="#popupNYC" data-rel="popup" data-position-to="window" data-transition="fade"> <img id = "exportutorial" src="images/ayuda.png"/> </a>
+					<img id = "expordel" src="images/borrar.png" onClick="eliminar();$('#transitionExample').popup('close');"/>
+					<img id = "exporimg" src="images/guardar.png" class ="compa"/>
+					<img id = "exporimpor" src="images/importar.png" onClick="javascript:abrigate();"/>
+					<img src="images/compartir.png" class = "compa"/>
+					<ul class ="subcompa">
+						<img id = "exporface" src="images/facebook.png" onClick="javascript:facebook();"/>
+						<img id = "exportwit" src="images/twitter.png" onClick="#"/>
+					</ul>
+				</li>
+			</ul>
+		</div>
+		<div data-role="popup" id="transitionExample" class="ui-content" data-theme="d" align="center">
+
+			<a href="#" data-rel="back" data-role="button" data-theme="a" data-icon="delete" data-iconpos="notext" class="ui-btn-right">Close</a>
+			<input id="text_color" type="image" src="images/color.png" onClick="startColorPicker(this); $('#transitionExample').popup('close');"/>
+			<br/>
+			<br/>
+			<img class = "pincelimg" src="images/pincel.png" onclick="grosor(1); $('#transitionExample').popup('close');"/>
+			<img class = "pincelimg" src="images/pincel2.png" onclick="grosor(7); $('#transitionExample').popup('close');" />
+			<img class = "pincelimg" src="images/pincel3.png" onclick="grosor(23);; $('#transitionExample').popup('close');"/>
+			<br/>
+			<br/>
+			<form>
+				<img src="images/goma.png" class = "pincelimg" onClick="borrando(); $('#transitionExample').popup('close');"/>
+				<input name="slider-3" id="slider-3" data-track-theme="d" data-theme="a" min="0" max="100" value="50" type="range" onchange="cambiarvalor()"/>
+			</form>
+			<br/>
+		</div>
+		<div data-role="popup" id="popupNYC" data-overlay-theme="a" data-theme="d" data-corners="false">
+			<a href="#" data-rel="back" data-role="button" data-theme="a" data-icon="delete" data-iconpos="notext" class="ui-btn-right">Close</a>
+			<img class="popphoto" src="images/logo.png"/>
+		</div>
+		<canvas id="canvasbackground" width="320px" height="390px"></canvas>
+		<canvas id="canvasSignature" width="320px" height="390px"></canvas>
+		<canvas id="canvasfinal" width="320px" height="390px"></canvas>
+		<image id="theimage"></image>
+		<img style = "right: 40px; position:absolute; display:none;" id = "sh" class = "desocultar" src="images/up.png"></img>
+		</div>
+		<div style="display:none; position:absolute;">
+			<form id = "formy" action="facebook.php" method="post" enctype="multipart/form-data">
+				<input id="mainarchivo" type="text" name="archivo"/><br>
+				<input id ="subm" type="submit" name="enviar" value="Compartir" /><br>
+				<input id="hid" type="hidden" name="action" value="upload" />
+			</form>
+		</div>
+		<script type="text/javascript" src="js/save_image.js"></script>
+		<script type="text/javascript" src="js/colorPicker.js"></script>
+		<script type="text/javascript" src="js/jquery.mobile-1.3.1.min.js"></script>
+		<script type="text/javascript">
+		$(function() {
+			$('.desplegable').click(function(){
+				$('.subnavegador').toggle('slow');
+			});
+		});
+		
+		$(function() {
+			$('.compa').click(function(){
+				$('.subcompa').toggle('slow');
+			});
+		});
+		
+		$(function(){
+			$('.ocultar').click(function(){
+				$('#h').toggle('slow');
+				$('#sh').toggle('slow');
+				$('#canvasbackground').animate({
+					height: '450px'
+				}, 1000);
+				$('#canvasfinal').animate({
+					height: '450px'
+				}, 1000);
+				$('#canvasSignature').animate({
+					height: '450px'
+				}, 1000);
+			});
+		});
+		
+		$(function(){
+			$('.desocultar').click(function(){
+				$('#h').toggle('slow');
+				$('#sh').toggle('slow');
+				$('#canvasbackground').animate({
+					height: '390px'
+				}, 1000);
+				$('#canvasfinal').animate({
+					height: '390px'
+				}, 1000);
+				$('#canvasSignature').animate({
+					height: '390px'
+				}, 1000);
+
+			});
+		});
+		
+		$(function(){
+			$('.herra').click(function(){
+				$('#transitionExample').popup("open");
+			});
+		})
+		function to_image(){
+			lienzo3 = document.getElementById("canvasfinal");
+			ctx2 = lienzo3.getContext("2d");
+			ctx2.drawImage(canvasbackground, 0, 0);
+			ctx2.drawImage(sigCanvas, 0,0);
+			var imgexport = lienzo3.toDataURL("image/png");
+			document.write('<img src="' + imgexport + '"/>');	// sustituir esta linea por el metodo de don Marshal para guardar
+			alert("guardado con exito");		
+		}
+
+		function cambiarvalor(){
+			w = document.getElementById("slider-3").value;
+		}
+	
+		function grosor(mlineWidth){
+			borrar = false;
+			window.context.lineWidth = mlineWidth;
+		}
+		/* Variables Globales */
+		window.context = 2;
+		var background = false;
+		var borrar = false;
+		var camara = false;
+		var canvasbackground = document.getElementById("canvasbackground");
+		var ctx = canvasbackground.getContext("2d");
+		var w = 20;
+		$(document).ready(function () {
+			initialize();
+		});
+		
+		function abrigate(){
+			if(background){
+				alert("Ya existe un fondo");
+				return;
+		}
+		
+		var pick = new MozActivity({
+			name: "pick",
+			data: {
+				type: ["image/png", "image/jpg", "image/jpeg"]
+			}
+		});
+		
+		pick.onsuccess = function(){
+			var img = new Image();
+			img.src = window.URL.createObjectURL(this.result.blob);
+	//			document.write('<img src="' + img.src + '"/>');
+			img.onload = function(){
+				ctx.drawImage(img, -70, 0, 500, 400);
+			}
+			background = true;			
+			};
+		}
+		
+		function facebook(){
+			lienzo3 = document.getElementById("canvasfinal");
+			ctx2 = lienzo3.getContext("2d");
+			ctx2.drawImage(canvasbackground, 0, 0);
+			ctx2.drawImage(sigCanvas, 0,0);
+			var imgexport = lienzo3.toDataURL("image/png");
+			
+			/*var ajax = new XMLHttpRequest();
+			ajax.open("POST",'http://canvas.nullcool.com/ftpupload.php',false);
+			ajax.setRequestHeader('Content-Type', 'application/upload');
+			ajax.send(imgexport);*/
+			
+			
+			$('#mainarchivo').val(imgexport);	
+			document.getElementById('formy').submit();
+		}
+
+		function faceboossk(){
+			/*
+				Código solo funciona en desktop :/
+			*/
+			var tx = prompt("Ingresa el texto a compartir");
+			lienzo3 = document.getElementById("canvasfinal");
+			ctx2 = lienzo3.getContext("2d");
+			ctx2.drawImage(canvasbackground, 0, 0);
+			ctx2.drawImage(sigCanvas, 0,0);
+			var io = new Image();
+			io.src = lienzo3.toDataURL("image/png"); // hay que guardar la imagen primero
+				// en cuanto se pueda guardar ya se puede exportar
+				alert(io);
+
+		}
+
+		function guardando(){
+			lienzo3 = document.getElementById("canvasfinal");
+			ctx2 = lienzo3.getContext("2d");
+			ctx2.drawImage(canvasbackground, 0, 0);
+			ctx2.drawImage(sigCanvas, 0,0);
+			var imgexport = lienzo3.toDataURL("image/png");
+			document.write('<img src="' + imgexport + '"/>');	// sustituir esta linea por el metodo de don Marshal para guardar
+			alert("guardado con exito");
+		}
+
+		function eliminar(){
+			window.context.clearRect(0,0,322,414);
+			ctx.clearRect(0,0,322,414);
+			background = false;
+		}
+
+		function borrando(){
+			borrar = !borrar;
+		}
+
+		function getPosition(mouseEvent, sigCanvas) {
+			var x, y;
+			if (mouseEvent.pageX != undefined && mouseEvent.pageY != undefined) {
+				x = mouseEvent.pageX;
+				y = mouseEvent.pageY;
+			}else {
+	            x = mouseEvent.clientX + document.body.scrollLeft + document.documentElement.scrollLeft;
+	            y = mouseEvent.clientY + document.body.scrollTop + document.documentElement.scrollTop;
+			}
+			return { X: x - sigCanvas.offsetLeft, Y: y - sigCanvas.offsetTop };
+		}
+
+		function initialize() {
+			sigCanvas = document.getElementById("canvasSignature");
+			window.context = sigCanvas.getContext("2d");
+			window.context.strokeStyle = '#000000';
+			window.context.lineWidth = 3;
+			var is_touch_device = 'ontouchstart' in document.documentElement;
+			if (is_touch_device) {
+				// create a drawer which tracks touch movements
+				var drawer = {
+					isDrawing: false,
+					touchstart: function (coors) {
+						window.context.beginPath();
+						window.context.moveTo(coors.x, coors.y);
+						this.isDrawing = true;
+					},
+					touchmove: function (coors) {
+						if (this.isDrawing) {
+							if(borrar){
+								window.context.clearRect(coors.x,coors.y,20,20);					
+							}
+							else{
+								window.context.lineTo(coors.x, coors.y);
+								window.context.stroke();
+							}
+						}
+					},
+					touchend: function (coors) {
+						if (this.isDrawing) {
+							this.touchmove(coors);
+							this.isDrawing = false;
+						}
+					}
+				};
+	            // create a function to pass touch events and coordinates to drawer
+				function draw(event) {
+
+	               // get the touch coordinates.  Using the first touch in case of multi-touch
+				var coors = {
+					x: event.targetTouches[0].pageX,
+					y: event.targetTouches[0].pageY
+				};
+
+	               // Now we need to get the offset of the canvas location
+				var obj = sigCanvas;
+
+				if (obj.offsetParent){
+					// Every time we find a new object, we add its offsetLeft and offsetTop to curleft and curtop.
+					do{
+						coors.x -= obj.offsetLeft;
+						coors.y -= obj.offsetTop;
+					}
+					// The while loop can be "while (obj = obj.offsetParent)" only, which does return null
+					// when null is passed back, but that creates a warning in some editors (i.e. VS2010).
+					while ((obj = obj.offsetParent) != null);
+				}
+
+				// pass the coordinates to the appropriate handler
+				drawer[event.type](coors);
+			}
+			// attach the touchstart, touchmove, touchend event listeners.
+			sigCanvas.addEventListener('touchstart', draw, false);
+			sigCanvas.addEventListener('touchmove', draw, false);
+			sigCanvas.addEventListener('touchend', draw, false);
+			// prevent elastic scrolling
+			sigCanvas.addEventListener('touchmove', function (event) {
+				event.preventDefault();
+				}, false); 
+			}
+			else {
+	            // start drawing when the mousedown event fires, and attach handlers to
+	            // draw a line to wherever the mouse moves to
+				$("#canvasSignature").mousedown(function (mouseEvent) {
+					var position = getPosition(mouseEvent, sigCanvas);
+					window.context.moveTo(position.X, position.Y);
+					window.context.beginPath();
+
+	               // attach event handlers
+				$(this).mousemove(function (mouseEvent) {
+					drawLine(mouseEvent, sigCanvas, window.context);
+				}).mouseup(function (mouseEvent) {
+					finishDrawing(mouseEvent, sigCanvas, window.context);
+				}).mouseout(function (mouseEvent) {
+					finishDrawing(mouseEvent, sigCanvas, window.context);
+				});
+			});
+		}
+		}
+
+	// draws a line to the x and y coordinates of the mouse event inside
+	// the specified element using the specified window.context
+		function drawLine(mouseEvent, sigCanvas) {
+			var position = getPosition(mouseEvent, sigCanvas);
+			if(borrar){
+				window.context.clearRect(position.X,position.Y,w,w);					
+			}
+			else{
+				window.context.lineTo(position.X, position.Y);
+				window.context.stroke();
+			}
+		}
+	      // draws a line from the last coordiantes in the path to the finishing
+	      // coordinates and unbind any event handlers which need to be preceded
+	      // by the mouse down event
+		function finishDrawing(mouseEvent, sigCanvas) {
+			// draw the line to the finishing coordinates
+			drawLine(mouseEvent, sigCanvas, window.context);
+			window.context.closePath();
+	         // unbind any events which could draw
+			$(sigCanvas).unbind("mousemove")
+						.unbind("mouseup")
+						.unbind("mouseout");
+		}
+   </script>
+</body>
+</html> 

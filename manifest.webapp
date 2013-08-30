@@ -1,0 +1,13 @@
+{
+	"name":"Boon",
+	"description": "Plasma tus ideas",
+	"launch_path": "index.html",
+    "icons": {
+        "128": "/images/icons/icon128.png"
+    },
+	"developer":{
+		"name":"Miguel del Monte, Yussel Coranguez, Victor Cosio, Aldo Cañedo, Isaac Shiosaki by CTIN"
+	},
+	"default_locale":"es",
+	"orientation": ["portrait"]
+} 

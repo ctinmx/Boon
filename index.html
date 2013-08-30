@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Boon -  Splash</title>
+	
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<script src= "http://code.jquery.com/jquery-1.9.1.min.js"></script>
+	<script>
+	function azarin(){
+		var imgRutaIni = "url('images/splash/fondo";
+		var imgArchivos = ["_1.png')","_2.png')","_3.png')","_1.png')"];
+		var azarillo = (Math.random()*3)+1;
+		var azarillo = parseInt(azarillo);
+		var rutaCompleta = imgRutaIni + imgArchivos[azarillo];
+		$("body").css({"background-image":rutaCompleta});
+		setTimeout(function(){
+			window.location = "canvas.html";
+		},3000);
+	}
+	
+	/*
+		Animación
+	*/
+	</script>
+</head>
+<body onload="javascript:azarin();"> 
+	<div id = "container">
+		<img id ="image1" src="images/splash/logo.png" style="top: 20px; left: 200px;"></img>
+	</div>
+</body>
+</html>
